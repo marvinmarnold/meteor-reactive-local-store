@@ -1,4 +1,4 @@
-import { ReactiveVar } from 'meteor/reactive-var';
+import { ReactiveDict } from 'meteor/reactive-dict';
 import Meteor from 'meteor/meteor';
 
 const sanitizedValue = function(v) {
@@ -14,18 +14,21 @@ const sanitizedValue = function(v) {
 }
 
 let _registeredKeys = [];
-let _reactiveVar = new ReactiveVar({});
+var _reactiveDict = new ReactiveDict('reactive-local-store');
 
 export const RLS = {
   get(key) {
-    return sanitizedValue(_reactiveVar.get()[key]);
+    return sanitizedValue(_reactiveDict.get(key));
   },
 
   set(key, value) {
     window.localStorage.setItem(key, value);
-    let __reactiveVar = _reactiveVar.get();
-    __reactiveVar[key] = value;
-    _reactiveVar.set(__reactiveVar);
+    _reactiveDict.set(key, value);
+  },
+
+  remove(key) {
+    window.localStorage.removeItem(key);
+    _reactiveDict.set(key, undefined);
   },
 
   init() {

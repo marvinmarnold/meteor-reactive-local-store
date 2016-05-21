@@ -1,4 +1,4 @@
-`reactive-local-store` syncs key-value pairs in HTML5 localStorage for long term persistence and exposes them in a ReactiveVar in order to get reactivity for modifications.
+`reactive-local-store` syncs key-value pairs in HTML5 localStorage for long term persistence and exposes them in a ReactiveDict in order to get reactivity for modifications.
 
 # Usage
 ````
